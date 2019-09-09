@@ -13,14 +13,6 @@ export default class RNN{
             for (let j = 0; j < sizeOfThisDeep; j++) {
                 reseau[index].push(new Noeud())
             }
-
         }
-    }
-
-    activateFnc(){
-        if(this.activateFnc === "linear"){
-            return this.entry
-        }
-        
     }
 }

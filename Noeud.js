@@ -10,6 +10,5 @@ export default class Noeud{
         if(this.activateFnc === "linear"){
             return this.entry
         }
-        
     }
 }
