@@ -3,10 +3,11 @@ import RNN from "./RNN.js";
 //Exemple [{size:2,fnc:""} , {size:3,fnc:"linear"} , {size:2,fnc:"linear"}]
 
 var POP = [];
-var NB_POP = 100;
-var TOP_SELECT = 20;
+var NB_POP = 1000;
+var TOP_SELECT = 50;
+var LEARNING = true;
 
-let tab_reseau = [{size:2,fnc:""} , {size:2,fnc:"linear"} , {size:2,fnc:"linear"}]
+let tab_reseau = [{size:2,fnc:""} , {size:4,fnc:"linear"} , {size:2,fnc:"linear"}]
 
 //Initialisation du réseau
 function createFirstGeneration(tab_reseau,nb_wanted){
@@ -32,7 +33,7 @@ function activateRNN(entry_value){
 //Ici on veut que Yx,Yy = x,y
 //On calcul la distance pour garder les taux les plus proches
 function fitness(wanted_value,sortie_value){
-    console.log(wanted_value,sortie_value)
+    //console.log(wanted_value,sortie_value)
     //Plus le score est grand, moins bien c'est par conséquent
     let score = Math.sqrt(Math.pow(wanted_value[0] - sortie_value[0],2) + Math.pow((wanted_value[1] -sortie_value[1]),2))//Distance cartésienne
     return score;
@@ -103,7 +104,10 @@ function mutateBabies(tab_weigths){
 function oneStep(entry_value,tab_reseau){
 
     activateRNN(entry_value);
-    creatingBabies(tab_reseau)
+
+    if(LEARNING){
+        creatingBabies(tab_reseau);
+    }
 
 }
 
@@ -117,4 +121,17 @@ $(window).mousemove(function( event ) {
 
     oneStep(entry_value,tab_reseau)
 
+    //console.log(POP[0])
+    drawcircle(POP[0].sortie[0]*widthPage,POP[0].sortie[1]*heigthPage);
 })
+
+$(window).click(function(event){
+    LEARNING = !LEARNING;
+    console.log("Learning : "+LEARNING);
+});
+
+function drawcircle(x,y){
+    clear()
+    console.log("toot")
+    ellipse(x, y, 50, 50);
+}
