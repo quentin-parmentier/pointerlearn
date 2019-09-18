@@ -6,6 +6,8 @@ var POP = [];
 var NB_POP = 1000;
 var TOP_SELECT = 50;
 var LEARNING = true;
+var GENERATION = 1;
+var STEP = 0;
 
 let tab_reseau = [{size:2,fnc:""} , {size:4,fnc:"linear"} , {size:2,fnc:"linear"}]
 
@@ -25,7 +27,7 @@ function activateRNN(entry_value){
        let score = fitness(entry_value,sortie_value); //Peut aussi changer ici
 
        //console.log(score)
-       element.setScore = score;
+       element.setScore = element.getScore + score;
     });
 }
 
@@ -50,9 +52,18 @@ function getTopPOP(){
 
 //On accouple les différents réseaux en fonction de leurs poids et performance
 function creatingBabies(tab_reseau){
-
+    GENERATION ++;
+    console.log("GENERATION : " + GENERATION);
     let topPOP = getTopPOP();
 
+    topPOP.forEach(element => {
+
+        element.setScore = 0;
+
+    })
+
+    
+    
     let newGen = new Array();
     newGen = topPOP;
 
@@ -83,7 +94,7 @@ function creatingBabies(tab_reseau){
     }
 
     POP = newGen;
-
+    //console.log(POP);
 }
 
 //Mutation du nouveau bébé
@@ -104,8 +115,10 @@ function mutateBabies(tab_weigths){
 function oneStep(entry_value,tab_reseau){
 
     activateRNN(entry_value);
+    STEP++;
 
-    if(LEARNING){
+    if(LEARNING && STEP > 100){
+        STEP = 0;
         creatingBabies(tab_reseau);
     }
 
