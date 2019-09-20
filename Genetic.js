@@ -5,6 +5,7 @@ import RNN from "./RNN.js";
 var POP = [];
 var NB_POP = 1000;
 var TOP_SELECT = 50;
+var MUTATION_RATE = 0.1;
 var LEARNING = true;
 var GENERATION = 1;
 var STEP = 0;
@@ -102,7 +103,7 @@ function mutateBabies(tab_weigths){
     
     let mutate_tab = new Array();
     tab_weigths.forEach(element => {
-        if(Math.random() < 0.05){
+        if(Math.random() < MUTATION_RATE){
             mutate_tab.push(Math.random());
         }else{
             mutate_tab.push(element);
