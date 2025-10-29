@@ -1,4 +1,4 @@
-import Noeud from "./noeud.js";
+import Noeud from "./Noeud.js";
 
 export default class RNN{
 
